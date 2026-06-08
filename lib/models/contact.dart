@@ -1,24 +1,20 @@
-/// Model đại diện cho một contact/người dùng trong app
 class Contact {
-  final String id;
   final String name;
   final String avatarUrl;
   final String lastMessage;
-  final String lastMessageTime;
+  final String lastTime;
   final bool isOnline;
-  final bool isUnread;
+  final int unreadCount;
 
   const Contact({
-    required this.id,
     required this.name,
     required this.avatarUrl,
     required this.lastMessage,
-    required this.lastMessageTime,
+    required this.lastTime,
     required this.isOnline,
-    this.isUnread = false,
+    required this.unreadCount,
   });
 
-  /// Lấy chữ cái đầu tiên của tên để làm fallback avatar
   String get initials {
     final parts = name.split(' ');
     if (parts.length >= 2) {

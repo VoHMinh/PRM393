@@ -1,38 +1,31 @@
 import 'package:flutter/material.dart';
 
-/// Widget hiển thị bong bóng tin nhắn kiểu Messenger
-class MessageBubble extends StatelessWidget {
-  final String text;
-  final bool isMe;
-  final String time;
-  final bool showTime;
+import '../models/chat_message.dart';
 
-  const MessageBubble({
-    super.key,
-    required this.text,
-    required this.isMe,
-    required this.time,
-    this.showTime = false,
-  });
+class MessageBubble extends StatelessWidget {
+  final ChatMessage message;
+
+  const MessageBubble({super.key, required this.message});
 
   @override
   Widget build(BuildContext context) {
-    return Padding(
-      padding: const EdgeInsets.symmetric(horizontal: 12, vertical: 3),
+    final isMe = message.isMe;
+
+    return Align(
+      alignment: isMe ? Alignment.centerRight : Alignment.centerLeft,
       child: Column(
-        crossAxisAlignment:
-            isMe ? CrossAxisAlignment.end : CrossAxisAlignment.start,
+        crossAxisAlignment: isMe
+            ? CrossAxisAlignment.end
+            : CrossAxisAlignment.start,
         children: [
-          // Bong bóng tin nhắn
           Container(
             constraints: BoxConstraints(
-              maxWidth: MediaQuery.of(context).size.width * 0.72,
+              maxWidth: MediaQuery.sizeOf(context).width * 0.70,
             ),
+            margin: const EdgeInsets.symmetric(vertical: 3),
             padding: const EdgeInsets.symmetric(horizontal: 14, vertical: 10),
             decoration: BoxDecoration(
-              color: isMe
-                  ? const Color(0xFF0084FF)
-                  : const Color(0xFFE4E6EB),
+              color: isMe ? const Color(0xFF0084FF) : const Color(0xFFE4E6EB),
               borderRadius: BorderRadius.only(
                 topLeft: const Radius.circular(18),
                 topRight: const Radius.circular(18),
@@ -41,7 +34,7 @@ class MessageBubble extends StatelessWidget {
               ),
             ),
             child: Text(
-              text,
+              message.text,
               style: TextStyle(
                 fontSize: 15,
                 color: isMe ? Colors.white : const Color(0xFF1C1E21),
@@ -49,18 +42,13 @@ class MessageBubble extends StatelessWidget {
               ),
             ),
           ),
-          // Thời gian (chỉ hiện khi showTime = true)
-          if (showTime)
-            Padding(
-              padding: const EdgeInsets.only(top: 4, left: 4, right: 4),
-              child: Text(
-                time,
-                style: const TextStyle(
-                  fontSize: 11,
-                  color: Color(0xFF8E8E93),
-                ),
-              ),
+          Padding(
+            padding: const EdgeInsets.only(left: 8, right: 8, bottom: 6),
+            child: Text(
+              message.time,
+              style: const TextStyle(color: Color(0xFF8E8E93), fontSize: 11),
             ),
+          ),
         ],
       ),
     );

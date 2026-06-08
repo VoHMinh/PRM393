@@ -1,8 +1,10 @@
 import 'package:flutter/material.dart';
 
-/// Widget ô tìm kiếm với giao diện giống Messenger
 class SearchBox extends StatelessWidget {
-  const SearchBox({super.key});
+  final String hintText;
+  final ValueChanged<String> onChanged;
+
+  const SearchBox({super.key, required this.hintText, required this.onChanged});
 
   @override
   Widget build(BuildContext context) {
@@ -10,22 +12,21 @@ class SearchBox extends StatelessWidget {
       margin: const EdgeInsets.symmetric(horizontal: 16, vertical: 8),
       decoration: BoxDecoration(
         color: const Color(0xFFF0F2F5),
-        borderRadius: BorderRadius.circular(24),
+        borderRadius: BorderRadius.circular(22),
       ),
-      child: const TextField(
+      child: TextField(
+        onChanged: onChanged,
         decoration: InputDecoration(
-          hintText: 'Tìm kiếm',
-          hintStyle: TextStyle(
-            color: Color(0xFF8E8E93),
-            fontSize: 15,
-          ),
-          prefixIcon: Icon(
+          hintText: hintText,
+          hintStyle: const TextStyle(color: Color(0xFF8E8E93), fontSize: 15),
+          prefixIcon: const Icon(
             Icons.search,
             color: Color(0xFF8E8E93),
             size: 22,
           ),
           border: InputBorder.none,
-          contentPadding: EdgeInsets.symmetric(horizontal: 16, vertical: 12),
+          isDense: true,
+          contentPadding: const EdgeInsets.symmetric(vertical: 11),
         ),
       ),
     );
